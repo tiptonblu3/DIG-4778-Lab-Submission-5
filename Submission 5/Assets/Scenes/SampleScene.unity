@@ -130,8 +130,9 @@ GameObject:
   - component: {fileID: 259285267}
   - component: {fileID: 259285266}
   - component: {fileID: 259285265}
+  - component: {fileID: 259285269}
   - component: {fileID: 259285264}
-  - component: {fileID: 259285268}
+  - component: {fileID: 259285270}
   m_Layer: 0
   m_Name: Coward
   m_TagString: Untagged
@@ -234,7 +235,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!195 &259285268
+--- !u!114 &259285269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 259285263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60cca6ec45ed41a4f912a4d518c06223, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Avoider
+  showGizmos: 1
+  agent: {fileID: 0}
+  avoidee: {fileID: 0}
+  speed: 5
+  isSeen: 0
+--- !u!195 &259285270
 NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

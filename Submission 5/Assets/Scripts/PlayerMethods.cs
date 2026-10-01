@@ -4,7 +4,7 @@ public class PlayerMethods : MonoBehaviour
 {
     public PlayerInput playerInput; // Reference to the PlayerInput component of the player
     public Rigidbody rb;
-    public int speed = 10;
+    public float speed = 10;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
