@@ -252,10 +252,9 @@ MonoBehaviour:
   avoidee: {fileID: 1681174040}
   speed: 5
   isSeen: 0
-  wasSeen: 0
   size_x: 10
   size_y: 10
-  cellsize: 1
+  cellsize: 10
 --- !u!195 &259285270
 NavMeshAgent:
   m_ObjectHideFlags: 0
