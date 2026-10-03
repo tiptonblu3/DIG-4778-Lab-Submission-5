@@ -11,6 +11,7 @@ public class Avoider : MonoBehaviour
     public float speed = 5f;
     public bool isSeen;
     public bool wasSeen;
+    public float timer = 0.5f;
 
     private List<Vector3> hidingSpots = new List<Vector3>(); //list that stores hiding spots for avoider
 
@@ -84,60 +85,127 @@ public class Avoider : MonoBehaviour
 
             wasSeen = isSeen;
 
-            yield return new WaitForSeconds(0.5f); // tells the avoider to wait a little before checking if the player has seen them
+            yield return new WaitForSeconds(timer); // tells the avoider to wait a little before checking if the player has seen them
         }
     }
 
     public void FindSpot()
     {
         hidingSpots.Clear();
-        
+
         var sampler = new PoissonDiscSampler(size_x, size_y, cellsize);
-        
+        NavMeshHit hit; // Declare hit here so it's accessible
+
+
         foreach (var point in sampler.Samples())
         {
-            Vector3 worldPoint = new Vector3(point.x - size_x / 2f + avoidee.transform.position.x,
+            Debug.Log("Valid hiding spots found: " + hidingSpots.Count);
+            Vector3 worldPoint = new Vector3(point.x - size_x / 2f + transform.position.x,
             transform.position.y,
-            point.y - size_y / 2f + avoidee.transform.position.z);
+            point.y - size_y / 2f + transform.position.z);
 
-            float distanceFromPlayer = Vector3.Distance(worldPoint, avoidee.transform.position);
-
-            if(!CheckVisibility(worldPoint) && distanceFromPlayer > 5f)
+            if (NavMesh.SamplePosition(worldPoint, out hit, 5.0f, NavMesh.AllAreas))
             {
-                hidingSpots.Add(worldPoint);
+                Vector3 validNavMeshPoint = hit.position;
+                float distanceFromPlayer = Vector3.Distance(validNavMeshPoint, avoidee.transform.position);
+                float distanceFromAgent = Vector3.Distance(validNavMeshPoint, transform.position);
+
+                // Check visibility and distance using the valid NavMesh position
+                if (!CheckVisibility(validNavMeshPoint) && distanceFromPlayer > 5f)
+                {
+                    hidingSpots.Add(validNavMeshPoint);
+                }
             }
 
         }
 
-        if (hidingSpots.Count > 0)
+    if (hidingSpots.Count > 0)
+    {
+        Vector3 bestSpot = hidingSpots[0];
+        float bestScore = float.MinValue;
+
+        foreach (Vector3 spot in hidingSpots)
         {
-            int randomIndex = Random.Range(0, hidingSpots.Count);
-            Vector3 hidingSpot = hidingSpots[randomIndex];
-            agent.SetDestination(hidingSpot);
+            float distToPlayer = Vector3.Distance(spot, avoidee.transform.position);
+            float distToAgent = Vector3.Distance(spot, transform.position);
+
+            // Scoring formula: Rewards being far from the player, 
+            // but heavily penalizes spots that require running too far (stops border hugging).
+            float score = distToPlayer - (distToAgent * 1.5f);
+
+            if (score > bestScore)
+            {
+                bestScore = score;
+                bestSpot = spot;
+            }
         }
+
+        agent.SetDestination(bestSpot);
+    }
+    else
+    {
+        // If no cover is found, force a direct flee vector away from the player
+        Vector3 fleeDir = (transform.position - avoidee.transform.position).normalized;
+        Vector3 fallbackPos = transform.position + fleeDir * 5f;
+        if (NavMesh.SamplePosition(fallbackPos, out hit, 5.0f, NavMesh.AllAreas))
+        {
+            agent.SetDestination(hit.position);
+        }
+    }
 
     }
 
     public bool CheckVisibility(Vector3 point)
     {
-        Vector3 direction = point - avoidee.transform.position;
-        float distance = direction.magnitude;
-
-        RaycastHit hit;
+        Vector3 origin = avoidee.transform.position + Vector3.up * 1.5f; // Player eye level
         
-        // checks if the raycast hits anything but the player
-        if (Physics.Raycast(avoidee.transform.position, direction.normalized, out hit, distance))
+        // Check multiple points (Center, Left, Right) around the target position 
+        // to prevent rays from slipping past box corners.
+        Vector3[] targetOffsets = new Vector3[]
         {
-            //avoidees vision is blocked
-            if (hit.transform == transform)
+            point + Vector3.up * 1.0f,                         // Center
+            point + Vector3.up * 1.0f + Vector3.right * 0.5f,  // Right offset
+            point + Vector3.up * 1.0f - Vector3.right * 0.5f   // Left offset
+        };
+
+        foreach (var targetPos in targetOffsets)
+        {
+            Vector3 direction = targetPos - origin;
+            float distance = direction.magnitude;
+
+            RaycastHit hit;
+            if (Physics.Raycast(origin, direction.normalized, out hit, distance))
             {
-                return true;
+                // If checking the avoider's actual position:
+                if (point == transform.position)
+                {
+                    if (hit.transform == transform || hit.transform.IsChildOf(transform))
+                    {
+                        return true; // Player sees the avoider
+                    }
+                }
+                else
+                {
+                    // If checking a candidate hiding spot:
+                    // If the ray hits the avoider or doesn't hit a wall/box first, it's visible.
+                    if (hit.transform == transform || hit.transform.IsChildOf(transform))
+                    {
+                        return true; // Visible from this angle
+                    }
+                }
             }
-            return false;
+            else
+            {
+                // If ray hits nothing at all, it's a completely open line of sight!
+                if (point != transform.position)
+                {
+                    return true; // Visible
+                }
+            }
         }
 
-        return true;
-
+        // If all rays are blocked by obstacles (walls/boxes), it is truly hidden.
+        return (point == transform.position) ? false : false; 
     }
 
     public Vector3 ClosestPoint()

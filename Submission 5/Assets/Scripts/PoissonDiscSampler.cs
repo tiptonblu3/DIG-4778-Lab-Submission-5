@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class PoissonDiscSampler : MonoBehaviour
+public class PoissonDiscSampler
 {
     private const int k = 30; // max number of attempts per sample
 

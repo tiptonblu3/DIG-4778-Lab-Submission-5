@@ -253,8 +253,9 @@ MonoBehaviour:
   speed: 5
   isSeen: 0
   wasSeen: 0
-  size_x: 10
-  size_y: 10
+  timer: 0.2
+  size_x: 30
+  size_y: 30
   cellsize: 1
 --- !u!195 &259285270
 NavMeshAgent:
