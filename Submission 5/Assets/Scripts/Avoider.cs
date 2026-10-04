@@ -66,7 +66,15 @@ public class Avoider : MonoBehaviour
             return;
         }
 
-
+        if(hidingSpots.Count > 0)
+        {
+            foreach(Vector3 spot in hidingSpots)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawLine(spot - Vector3.right * 0.5f, spot + Vector3.right * 0.5f);
+                Gizmos.DrawLine(spot - Vector3.forward * 0.5f, spot + Vector3.forward * 0.5f);
+            }
+        }
     }
 
     private IEnumerator GeneralLoop()
