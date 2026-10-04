@@ -1,0 +1,13 @@
+C:\Users\Jared Dubin\Documents\GitHub\DIG-4778-Lab-Submission-5\Submission 5\AvoiderFJJ\obj\Release\net8.0\AvoiderFJJ.csproj.AssemblyReference.cache
+C:\Users\Jared Dubin\Documents\GitHub\DIG-4778-Lab-Submission-5\Submission 5\AvoiderFJJ\obj\Release\net8.0\AvoiderFJJ.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Jared Dubin\Documents\GitHub\DIG-4778-Lab-Submission-5\Submission 5\AvoiderFJJ\obj\Release\net8.0\AvoiderFJJ.AssemblyInfoInputs.cache
+C:\Users\Jared Dubin\Documents\GitHub\DIG-4778-Lab-Submission-5\Submission 5\AvoiderFJJ\obj\Release\net8.0\AvoiderFJJ.AssemblyInfo.cs
+C:\Users\Jared Dubin\Documents\GitHub\DIG-4778-Lab-Submission-5\Submission 5\AvoiderFJJ\obj\Release\net8.0\AvoiderFJJ.csproj.CoreCompileInputs.cache
+C:\Users\Jared Dubin\Documents\GitHub\DIG-4778-Lab-Submission-5\Submission 5\AvoiderFJJ\obj\Release\net8.0\AvoiderFJJ.sourcelink.json
+C:\Users\Jared Dubin\Documents\GitHub\DIG-4778-Lab-Submission-5\Submission 5\AvoiderFJJ\bin\Release\net8.0\AvoiderFJJ.deps.json
+C:\Users\Jared Dubin\Documents\GitHub\DIG-4778-Lab-Submission-5\Submission 5\AvoiderFJJ\bin\Release\net8.0\AvoiderFJJ.dll
+C:\Users\Jared Dubin\Documents\GitHub\DIG-4778-Lab-Submission-5\Submission 5\AvoiderFJJ\bin\Release\net8.0\AvoiderFJJ.pdb
+C:\Users\Jared Dubin\Documents\GitHub\DIG-4778-Lab-Submission-5\Submission 5\AvoiderFJJ\obj\Release\net8.0\AvoiderFJJ.dll
+C:\Users\Jared Dubin\Documents\GitHub\DIG-4778-Lab-Submission-5\Submission 5\AvoiderFJJ\obj\Release\net8.0\refint\AvoiderFJJ.dll
+C:\Users\Jared Dubin\Documents\GitHub\DIG-4778-Lab-Submission-5\Submission 5\AvoiderFJJ\obj\Release\net8.0\AvoiderFJJ.pdb
+C:\Users\Jared Dubin\Documents\GitHub\DIG-4778-Lab-Submission-5\Submission 5\AvoiderFJJ\obj\Release\net8.0\ref\AvoiderFJJ.dll
